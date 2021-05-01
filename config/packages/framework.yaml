@@ -15,6 +15,3 @@ framework:
     #fragments: true
     php_errors:
         log: true
-
-    ide:
-        'vscode://open?url=file://%%f&line=%%l'
