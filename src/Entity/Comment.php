@@ -51,9 +51,14 @@ class Comment
     private $conference;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, options={"default": "submitted"})
      */
     private $photoFilename;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $state = 'submitted';
 
     public function __toString(): string
     {
@@ -141,6 +146,18 @@ class Comment
     public function setPhotoFilename(?string $photoFilename): self
     {
         $this->photoFilename = $photoFilename;
+
+        return $this;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
