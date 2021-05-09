@@ -3,40 +3,38 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\CommentRepository;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=CommentRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Comment
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
-    #[Assert\NotBlank]
     private $author;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
-    #[Assert\NotBlank]
     private $text;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Email
      */
-    #[Assert\NotBlank]
-    #[Assert\Email]
     private $email;
 
     /**
@@ -45,18 +43,18 @@ class Comment
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Conference::class, inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Conference", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $conference;
 
     /**
-     * @ORM\Column(type="string", length=255, options={"default": "submitted"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photoFilename;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default": "submitted"})
      */
     private $state = 'submitted';
 

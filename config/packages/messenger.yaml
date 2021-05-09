@@ -19,4 +19,6 @@ framework:
 
         routing:
             # Route your messages to the transports
-            'App\Message\CommentMessage': async
+            App\Message\CommentMessage: async
+            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
+            
