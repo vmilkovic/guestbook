@@ -9,14 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
 use Twig\Environment;
 
-#[Route('/admin')]
 class AdminController extends AbstractController
 {
     private $twig;
@@ -30,7 +28,9 @@ class AdminController extends AbstractController
         $this->bus = $bus;
     }
 
-    #[Route('/comment/review/{id}', name: 'review_comment')]
+    /**
+     * @Route("/admin/comment/review/{id}", name="review_comment")
+     */
     public function reviewComment(Request $request, Comment $comment, Registry $registry): Response
     {
         $accepted = !$request->query->get('reject');
@@ -57,14 +57,16 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/http-cache/{uri<.*>}', methods: ['PURGE'])]
-    public function purgeHttpCache(KernelInterface $kernel, Request $request, string $uri)
+    /**
+     * @Route("/http-cache/{uri<.*>}", methods={"PURGE"})
+     */
+    public function purgeHttpCache(KernelInterface $kernel, Request $request, string $uri): Response
     {
-        if ('pord' === $kernel->getEnvironment()) {
+        if ('prod' === $kernel->getEnvironment()) {
             return new Response('KO', 400);
         }
 
-        $store = (new Class($kernel) extends HttpCache {})->getStore();
+        $store = (new class($kernel) extends HttpCache {})->getStore();
         $store->purge($request->getSchemeAndHttpHost().'/'.$uri);
 
         return new Response('Done');
