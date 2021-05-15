@@ -39,6 +39,7 @@
         "symfony/serializer": "5.2.*",
         "symfony/slack-notifier": "5.2.*",
         "symfony/string": "5.2.*",
+        "symfony/translation": "5.2.*",
         "symfony/twig-bundle": "^5.2",
         "symfony/validator": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.11",
@@ -48,6 +49,7 @@
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/inky-extra": "^3",
         "twig/intl-extra": "^3",
+        "twig/string-extra": "^3.3",
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
